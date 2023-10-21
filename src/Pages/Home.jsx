@@ -1,4 +1,4 @@
-import { Box, Heading} from '@chakra-ui/react'
+import { Box, Heading, Text} from '@chakra-ui/react'
 import React, { useState } from 'react'
 import Navbar from '../Components/Navbar';
 import HeroSection from '../Components/HeroSection';
@@ -15,7 +15,7 @@ const Home = () => {
        <HeroSection/>
        <MainSection/>
        <MainSectionTwo/>
-       <Heading textAlign="center" color="black" as="h1"fontSize={{base:"30px", sm:"35px", md:'40px', lg:"45px", xl:"50px"}} fontWeight="bold" mt="20px">Discover my more projects!</Heading>
+       <Text bgGradient="linear(315deg, #70b2d9 0%, #39e5b6 74%)"  bgClip='text' textAlign="center"  fontSize={{base:"30px", sm:"35px", md:'40px', lg:"45px", xl:"50px"}} fontWeight="bold" mt="20px">Discover my more projects!</Text>
        <Footer/>
     </Box>
   )
