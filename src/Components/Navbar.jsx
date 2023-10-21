@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import person from '../assets/person.png'
 import logo from '../assets/logo.webp'
 import {HamburgerIcon} from '@chakra-ui/icons'
+import { Link, useNavigate } from 'react-router-dom'
 import { Box, Flex, HStack, Image,Button, Text, Popover,PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow, PopoverCloseButton,  Drawer, DrawerBody, DrawerFooter, DrawerHeader,DrawerContent,DrawerCloseButton, useDisclosure} from '@chakra-ui/react'
 
 const Navbar = () => {
-    const [register, setRegister]=useState('CREATE ACCOUNT');
+    const [register, setRegister]=useState(false);
+    const navigate=useNavigate()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
 
@@ -21,17 +23,20 @@ const Navbar = () => {
         <Flex justifyContent="space-between" m="0 20px 0 20px" p="10px" alignItems="center">
 
             <HStack _hover={hoverColor}>
-                <Image src={logo} w='55px'/>
+               <Link to='/'><Image src={logo} w='55px'/></Link>
+               <Link to='/'>
                 <Box>
                    <Text fontSize="24px" fontWeight="bold">QRcode</Text>
                    <Text mt="-7px">Gen</Text>
                 </Box>
+                </Link>
+                
             </HStack>
 
             <HStack w={{lg:'50%', xl:'40%'}} display={{base:"none",sm:'none', md:'none', lg:'flex', xl:'flex'}} justifyContent="space-between">
-                <Text fontSize={{lg:'15px', xl:'17px'}} _hover={hoverColor}>Create URL QRcode</Text>
-                <Text fontSize={{lg:'15px', xl:'17px'}} _hover={hoverColor}>Create Text QRcode</Text>
-                <Text fontSize={{lg:'15px', xl:'17px'}} _hover={hoverColor}>Scan Qrcode</Text>
+               <Link to="/urlqr"><Text fontSize={{lg:'15px', xl:'17px'}} _hover={hoverColor}>Create URL QRcode</Text></Link> 
+               <Link to="/textqr"><Text fontSize={{lg:'15px', xl:'17px'}} _hover={hoverColor}>Create Text QRcode</Text></Link> 
+               <Link to="/scanqr"><Text fontSize={{lg:'15px', xl:'17px'}} _hover={hoverColor}>Scan Qrcode</Text></Link> 
                 <Box>
                     <Popover autoFocus={false}>
                         <PopoverTrigger>
@@ -40,11 +45,11 @@ const Navbar = () => {
                         <PopoverContent color='black' p="3px">
                             <PopoverArrow />
                             <PopoverCloseButton color="teal" fontSize="14px" />
-                            <PopoverHeader color="teal" mb="3px" borderRadius="5px" fontWeight="bold">{register==='CREATE ACCOUNT' ? register : 'Account'}</PopoverHeader>
+                            <PopoverHeader color="teal" mb="3px" borderRadius="5px" fontWeight="bold">{register==false ? 'CREATE ACCOUNT' : 'Account'}</PopoverHeader>
                                 {
-                                  register==='CREATE ACCONT' ?
+                                  register==false ?
                                   <PopoverBody>
-                                    <Button w="100%" background='teal'  _hover={{background:'lightgreen', color:'black'}} color="white">SignIn / SignUp</Button>
+                                    <Button onClick={()=>navigate('/signup')} w="100%" background='teal'  _hover={{background:'lightgreen', color:'black'}} color="white">SignIn / SignUp</Button>
                                   </PopoverBody> : 
                                    <PopoverBody textAlign="center">
                                      <Text>Shubham Chaubey</Text>
@@ -53,7 +58,6 @@ const Navbar = () => {
                                      <Button w="100%"  _hover={{background:'lightgreen', color:'black'}} background='teal' color="white" mt="10px">Logout</Button>
                                  </PopoverBody> 
                                 }
-                            
                         </PopoverContent>
                     </Popover>
                 </Box>
@@ -66,13 +70,15 @@ const Navbar = () => {
                     <DrawerCloseButton />
                     <DrawerHeader color="white" fontSize="22px" mt="18px">Welcome To QRcode-Gen</DrawerHeader>
                     <DrawerBody color="white" fontSize="20px" textAlign="center" mt="35px">
-                        <Text mb="7px" _hover={hoverColor}>Create URL QRcode</Text>
-                        <Text mb="7px" _hover={hoverColor}>Create Text QRcode</Text>
-                        <Text mb="7px" _hover={hoverColor}>Scan Qrcode</Text>
-                        <Text _hover={hoverColor}>Account</Text>
+                        <Link to="/urlqr"><Text mb="7px" _hover={hoverColor}>Create URL QRcode</Text></Link>
+                        <Link to="/textqr"><Text mb="7px" _hover={hoverColor}>Create Text QRcode</Text></Link>
+                        <Link to="/scanqr"><Text mb="7px" _hover={hoverColor}>Scan Qrcode</Text></Link>
+                        <Link to="/signup"><Text _hover={hoverColor}>Account</Text></Link>
                     </DrawerBody>
                     <DrawerFooter>
-                        <Button>Logout</Button>
+                        {
+                            register ? <Button>Logout</Button> : ''
+                        }
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
