@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Flex, Heading, Image, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
 import men from '../assets/men.png'
 import Navbar from '../Components/Navbar'
@@ -7,7 +7,16 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
   const navigate=useNavigate()
+  const [userDetails, setUserDetails]=useState({name:'', password:"", email:"", mobile:""});
 
+  const storeDetails=(e)=>{
+      setUserDetails({...userDetails, [e.target.name]:e.target.value})
+  }
+  const {name, password, email, mobile}=userDetails
+  const uploadUserDetails=(e)=>{
+    e.preventDefault();
+    console.log(userDetails)
+  }
 
   return (
     <>
@@ -19,22 +28,31 @@ const Register = () => {
         <Text color="teal" fontWeight="bold" fontSize="20px">Sign Up</Text>
        </Flex>
 
-       <form>
-          <Input type="text" mt="20px" mb="15px"  placeholder='Username' variant='flushed'/>
+       <form onSubmit={uploadUserDetails}>
+          <Input type="text" value={name} name="name"  mt="20px" mb="15px"  placeholder='Username' variant='flushed' onChange={storeDetails}/>
+
           <InputGroup mb="30px">
-            <Input type="text"  placeholder='Mobile Number' variant='flushed'/>
+            <Input type="tel" value={mobile} name="mobile" placeholder='Mobile Number' variant='flushed' onChange={storeDetails}/>
             <InputRightElement>
               <PhoneIcon fontSize="20px" color="teal"/>
             </InputRightElement>
           </InputGroup>
-          <Input type="text" mb="15px"  placeholder='Email Address' variant='flushed'/>
+
+
+          <Input type="email" value={email} name="email" mb="15px"  placeholder='Email Address' variant='flushed' onChange={storeDetails}/>
+
+
           <InputGroup mb="30px">
-            <Input type="text"  placeholder='Password' variant='flushed'/>
+            <Input type="password" value={password} name="password"  placeholder='Password' variant='flushed' onChange={storeDetails}/>
             <InputRightElement>
               <ViewIcon fontSize="25px" color="teal"/>
             </InputRightElement>
           </InputGroup>
-          <Button w="100%" leftIcon={<ArrowForwardIcon />} colorScheme='teal' variant='solid'>Register</Button>
+
+
+          <Button type='submit' w="100%" leftIcon={<ArrowForwardIcon />} colorScheme='teal' variant='solid'>Register</Button>
+
+
           <Text>Forgot Password?</Text>
           <Text>Do you have an account ? <Link to="/login"><span style={{color:"red"}}>Sign In</span></Link></Text>
         </form>       
