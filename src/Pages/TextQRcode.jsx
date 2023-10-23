@@ -10,6 +10,7 @@ const TextQRcode = () => {
     e.preventDefault();
     console.log(url);
   };
+  
 
   return (
     <>
