@@ -4,9 +4,10 @@ import men from '../assets/men.png'
 import Navbar from '../Components/Navbar'
 import { ViewIcon , ViewOffIcon, SpinnerIcon, ArrowForwardIcon, PhoneIcon} from '@chakra-ui/icons'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 const Register = () => {
-  const navigate=useNavigate()
+  const navigate=useNavigate();
   const [userDetails, setUserDetails]=useState({name:'', password:"", email:"", mobile:""});
 
   const storeDetails=(e)=>{
@@ -16,6 +17,9 @@ const Register = () => {
   const uploadUserDetails=(e)=>{
     e.preventDefault();
     console.log(userDetails)
+    axios.post(`http://localhost:8080/signup`, userDetails)
+    .then((res)=>console.log(res))
+    .catch((err)=>console.log(err))
   }
 
   return (

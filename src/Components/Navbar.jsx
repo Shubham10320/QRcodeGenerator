@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import person from '../assets/person.png'
 import logo from '../assets/logo.webp'
 import {HamburgerIcon} from '@chakra-ui/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { Box, Flex, HStack, Image,Button, Text, Popover,PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow, PopoverCloseButton,  Drawer, DrawerBody, DrawerFooter, DrawerHeader,DrawerContent,DrawerCloseButton, useDisclosure} from '@chakra-ui/react'
+import { myContext } from '../Context/AuthContext'
 
 const Navbar = () => {
-    const [register, setRegister]=useState(false);
+    // const [register, setRegister]=useState(false);
     const navigate=useNavigate()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
+    const{authPersonDetail, auth}=useContext(myContext);
+    // const{email}=authPersonDetail;
 
     const hoverColor={
         color:'teal',
@@ -45,16 +48,16 @@ const Navbar = () => {
                         <PopoverContent color='black' p="3px">
                             <PopoverArrow />
                             <PopoverCloseButton color="teal" fontSize="14px" />
-                            <PopoverHeader color="teal" mb="3px" borderRadius="5px" fontWeight="bold">{register==false ? 'CREATE ACCOUNT' : 'Account'}</PopoverHeader>
+                            <PopoverHeader color="teal" mb="3px" borderRadius="5px" fontWeight="bold">{auth==false ? 'CREATE ACCOUNT' : 'Account'}</PopoverHeader>
                                 {
-                                  register==false ?
+                                  auth==false ?
                                   <PopoverBody>
                                     <Button onClick={()=>navigate('/signup')} w="100%" background='teal'  _hover={{background:'lightgreen', color:'black'}} color="white">SignIn / SignUp</Button>
                                   </PopoverBody> : 
                                    <PopoverBody textAlign="center">
-                                     <Text>Shubham Chaubey</Text>
-                                     <Text>888888888</Text>
-                                     <Text>schaubey10320@gmail.com</Text>
+                                     {/* <Text>{name}</Text> */}
+                                     {/* <Text>{mobile}</Text>
+                                     <Text>{email}</Text> */}
                                      <Button w="100%"  _hover={{background:'lightgreen', color:'black'}} background='teal' color="white" mt="10px">Logout</Button>
                                  </PopoverBody> 
                                 }
@@ -77,7 +80,7 @@ const Navbar = () => {
                     </DrawerBody>
                     <DrawerFooter>
                         {
-                            register ? <Button>Logout</Button> : ''
+                            auth? <Button>Logout</Button> : ''
                         }
                     </DrawerFooter>
                 </DrawerContent>

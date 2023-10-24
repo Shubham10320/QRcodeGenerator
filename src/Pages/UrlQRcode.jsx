@@ -40,7 +40,7 @@ const UrlQRcode = () => {
         title: "Success",
         description: "Your QRcode created successfully!",
         status: "success",
-        duration: 6000,
+        duration: 3000,
         isClosable: true,
       });
     }
