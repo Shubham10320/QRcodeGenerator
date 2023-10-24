@@ -5,6 +5,11 @@ import {
   Input,
   Image,
   Select,
+  useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Text,
   Center,
 } from "@chakra-ui/react";
@@ -18,11 +23,27 @@ const UrlQRcode = () => {
   const [url, setUrl] = useState("");
   const [size, setSize] = useState(300);
   const [show, setShow] = useState(false);
+  const toast = useToast();
   const qrCodeRef = useRef(null);
+  const [present, setPresent]=useState(false)
 
   const uploadUserDetails = (e) => {
     e.preventDefault();
-    setShow(true);
+    if (!url) {
+      setPresent(true)
+      setTimeout(()=>{
+        setPresent(false)
+      },3000)
+    }else{
+      setShow(true);
+      toast({
+        title: "Success",
+        description: "Your QRcode created successfully!",
+        status: "success",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
   };
 
   const downloadQRCode = () => {
@@ -32,11 +53,26 @@ const UrlQRcode = () => {
       link.href = canvas.toDataURL();
       link.click();
     });
+    toast({
+      title: "Success",
+      description: "Your QRcode downloaded successfully!",
+      status: "success",
+      duration: 6000,
+      isClosable: true,
+    });
   };
 
   return (
     <>
-      <Navbar />
+      <Navbar/>
+      {
+            present ? <Alert status="error" m="auto" mt="20px"  w={{ base: "90%", sm: "70%", md: "30%", lg: "20%", xl: "20%" }}>
+            <AlertIcon />
+            <AlertDescription>
+              Please fill all the details.
+            </AlertDescription>
+          </Alert> : ''
+          }
       <Box
         w={{ base: "90%", sm: "70%", md: "45%", lg: "38%", xl: "30%" }}
         m="auto"
@@ -45,7 +81,7 @@ const UrlQRcode = () => {
         p="30px"
       >
         <form onSubmit={uploadUserDetails}>
-        <Text
+          <Text
             fontSize="30px"
             bgGradient="linear(315deg, #70b2d9 0%, #39e5b6 74%)"
             bgClip="text"
@@ -54,7 +90,7 @@ const UrlQRcode = () => {
           >
             Create QRcode
           </Text>
-
+         
           <Input
             type="url"
             value={url}
@@ -96,13 +132,13 @@ const UrlQRcode = () => {
           <QRCode value={url} size={size} />
         </Box>
       ) : null}
-      {
-        show ?
-        <Center><Button colorScheme="red"   mt="50px" onClick={downloadQRCode}>
-        Download
-      </Button></Center>
-         : null
-      }
+      {show ? (
+        <Center>
+          <Button colorScheme="red" mt="50px" onClick={downloadQRCode}>
+            Download
+          </Button>
+        </Center>
+      ) : null}
     </>
   );
 };
