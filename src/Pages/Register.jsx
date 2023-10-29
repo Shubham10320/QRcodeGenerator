@@ -17,14 +17,15 @@ const Register = () => {
   const uploadUserDetails=(e)=>{
     e.preventDefault();
     console.log(userDetails)
-    axios.post(`http://localhost:8080/signup`, userDetails)
+    axios.post(`https://qrgen-6ih9.onrender.com/signup`, userDetails)
     .then((res)=>console.log(res))
     .catch((err)=>console.log(err))
   }
+  const [show, setShow] = useState(false)
+  const handleClick = () => setShow(!show)
 
   return (
     <>
-    <Navbar/>
     <Box  w={{base:"90%",sm:"70%" ,md:"45%",lg:"38%",xl:"30%"}}  m="auto" boxShadow="rgba(0, 0, 0, 0.35) 0px 5px 15px" mt="50px" p="30px">
 
        <Flex w={{base:"67%",sm:"50%" ,md:"50%",lg:"60%",xl:"35%"}} m="auto" alignItems="center" justifyContent="center" gap="10px" border="2px solid teal" p="5px" borderRadius="30px">
@@ -47,9 +48,9 @@ const Register = () => {
 
 
           <InputGroup mb="30px">
-            <Input type="password" value={password} name="password"  placeholder='Password' variant='flushed' onChange={storeDetails}/>
+            <Input type={show ? 'text' : 'password'} value={password} name="password"  placeholder='Password' variant='flushed' onChange={storeDetails}/>
             <InputRightElement>
-              <ViewIcon fontSize="25px" color="teal"/>
+              <ViewIcon onClick={handleClick} fontSize="25px" color="teal"/>
             </InputRightElement>
           </InputGroup>
 

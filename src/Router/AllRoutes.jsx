@@ -14,6 +14,7 @@ const AllRoutes = () => {
        <Route path='/' element={<Home/>}/>
        <Route path='/login' element={<Login />}/>
        <Route path='/signup' element={<Register />}/>
+       {/* <Route path='/scanqr' element={<ScanQRcode />}/> */}
        <Route path='/scanqr' element={<PrivateRoute><ScanQRcode /></PrivateRoute>}/>
        <Route path='/textqr' element={<TextQRcode />}/>
        <Route path='/urlqr' element={<UrlQRcode/>}/>

@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Image,
+  useToast,
   Input,
   InputGroup,
   InputRightElement,
@@ -33,22 +34,35 @@ const Login = () => {
   const storeDetails = (e) => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
-
+  const toast = useToast();
   const uploadUserData = (e) => {
     e.preventDefault();
     console.log(email, password)
     axios
-      .post(`http://localhost:8080/login`, userDetails)
+      .post(`https://qrgen-6ih9.onrender.com/login`, userDetails)
       .then((res) =>{
-         console.log(res.data)
-         setAuthPersonDetail(email, password);
+         console.log(res.data.user);
+         const{email, name, mobile}=res.data.user;
+         setAuthPersonDetail({email,name, mobile});
+         loggin();
+         toast({
+          title: "Success",
+          description: "You logged In!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+         navigate('/')
       })
       .catch((err) => console.log(err));
   };
 
+  const [show, setShow] =useState(false)
+  const handleClick = () => setShow(!show)
+
+
   return (
     <>
-      <Navbar />
       <Box
         w={{ base: "90%", sm: "70%", md: "40%", lg: "30%", xl: "30%" }}
         m="auto"
@@ -85,7 +99,7 @@ const Login = () => {
           />
           <InputGroup mb="30px">
             <Input
-              type="text"
+              type={show ? 'text' : 'password'}
               name="password"
               value={password}
               placeholder="Password"
@@ -93,7 +107,7 @@ const Login = () => {
               onChange={storeDetails}
             />
             <InputRightElement>
-              <ViewIcon fontSize="25px" color="teal" />
+              <ViewIcon onClick={handleClick} fontSize="25px" color="teal" />
             </InputRightElement>
           </InputGroup>
           <Button

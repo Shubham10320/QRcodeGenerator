@@ -65,7 +65,6 @@ const TextQRcode = () => {
 
   return (
     <>
-      <Navbar/>
       {
             present ? <Alert status="error" m="auto" mt="20px"  w={{ base: "90%", sm: "70%", md: "30%", lg: "20%", xl: "20%" }}>
             <AlertIcon />

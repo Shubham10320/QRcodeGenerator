@@ -3,7 +3,7 @@ import person from '../assets/person.png'
 import logo from '../assets/logo.webp'
 import {HamburgerIcon} from '@chakra-ui/icons'
 import { Link, useNavigate } from 'react-router-dom'
-import { Box, Flex, HStack, Image,Button, Text, Popover,PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow, PopoverCloseButton,  Drawer, DrawerBody, DrawerFooter, DrawerHeader,DrawerContent,DrawerCloseButton, useDisclosure} from '@chakra-ui/react'
+import { Box, Flex, useToast,HStack, Image,Button, Text, Popover,PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow, PopoverCloseButton,  Drawer, DrawerBody, DrawerFooter, DrawerHeader,DrawerContent,DrawerCloseButton, useDisclosure} from '@chakra-ui/react'
 import { myContext } from '../Context/AuthContext'
 
 const Navbar = () => {
@@ -11,15 +11,24 @@ const Navbar = () => {
     const navigate=useNavigate()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
-    const{authPersonDetail, auth}=useContext(myContext);
-    // const{email}=authPersonDetail;
-
+    const{authPersonDetail,setAuth,auth}=useContext(myContext);
+    const{name, mobile,email}=authPersonDetail;
     const hoverColor={
         color:'teal',
         textDecoration:"underline",
         cursor:'pointer'
     }
-    
+    const toast = useToast();
+    const logout=()=>{
+        setAuth(false)
+        toast({
+            title: "Success",
+            description: "Account logout!",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+    }
 
   return (
     <Box background="linear-gradient(315deg, #70b2d9 0%, #39e5b6 74%)" color="white" >
@@ -55,10 +64,10 @@ const Navbar = () => {
                                     <Button onClick={()=>navigate('/signup')} w="100%" background='teal'  _hover={{background:'lightgreen', color:'black'}} color="white">SignIn / SignUp</Button>
                                   </PopoverBody> : 
                                    <PopoverBody textAlign="center">
-                                     {/* <Text>{name}</Text> */}
-                                     {/* <Text>{mobile}</Text>
-                                     <Text>{email}</Text> */}
-                                     <Button w="100%"  _hover={{background:'lightgreen', color:'black'}} background='teal' color="white" mt="10px">Logout</Button>
+                                     <Text fontWeight="bold">{name}</Text>
+                                     <Text fontWeight="bold">{mobile}</Text>
+                                     <Text fontWeight="bold">{email}</Text>
+                                     <Button w="100%"  _hover={{background:'lightgreen', color:'black'}} background='teal' color="white" mt="10px" onClick={logout}>Logout</Button>
                                  </PopoverBody> 
                                 }
                         </PopoverContent>
@@ -80,7 +89,7 @@ const Navbar = () => {
                     </DrawerBody>
                     <DrawerFooter>
                         {
-                            auth? <Button>Logout</Button> : ''
+                            auth? <Button onClick={logout}>Logout</Button> : ''
                         }
                     </DrawerFooter>
                 </DrawerContent>

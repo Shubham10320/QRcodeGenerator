@@ -5,7 +5,7 @@ export const myContext = createContext();
 const AuthContext = ({ children }) => {
 
   const [auth, setAuth] = useState(false);
-  const [authPersonDetail, setAuthPersonDetail]=useState();
+  const [authPersonDetail, setAuthPersonDetail]=useState({name:'', email:"", mobile:""});
   const loggin = () => {
     setAuth(true);
   };

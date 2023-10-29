@@ -11,7 +11,6 @@ const Home = () => {
 
   return (
     <Box>
-       <Navbar/>
        <HeroSection/>
        <MainSection/>
        <MainSectionTwo/>
