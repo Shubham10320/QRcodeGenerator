@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, Flex, Heading, Image, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
+import { Box,useToast, Button, Flex, Heading, Image, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
 import men from '../assets/men.png'
 import Navbar from '../Components/Navbar'
 import { ViewIcon , ViewOffIcon, SpinnerIcon, ArrowForwardIcon, PhoneIcon} from '@chakra-ui/icons'
@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const Register = () => {
   const navigate=useNavigate();
+  const toast = useToast();
   const [userDetails, setUserDetails]=useState({name:'', password:"", email:"", mobile:""});
 
   const storeDetails=(e)=>{
@@ -18,7 +19,16 @@ const Register = () => {
     e.preventDefault();
     console.log(userDetails)
     axios.post(`https://qrgen-6ih9.onrender.com/signup`, userDetails)
-    .then((res)=>navigate('/login'))
+    .then((res)=>{
+      toast({
+        title: "Success",
+        description: "You Registered Successfully!",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      navigate('/login')
+    })
     .catch((err)=>console.log(err))
   }
   const [show, setShow] = useState(false)
