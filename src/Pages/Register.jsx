@@ -18,7 +18,7 @@ const Register = () => {
     e.preventDefault();
     console.log(userDetails)
     axios.post(`https://qrgen-6ih9.onrender.com/signup`, userDetails)
-    .then((res)=>console.log(res))
+    .then((res)=>navigate('/login'))
     .catch((err)=>console.log(err))
   }
   const [show, setShow] = useState(false)
